@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material.module';
 import { RoutingModule } from './modules/routing.module';
 
+import { NotificationService } from './services/shared/notification.service';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 
@@ -19,7 +21,8 @@ import { LoginComponent } from './components/login/login.component';
     BrowserAnimationsModule,
     MaterialModule,
     RoutingModule],
-  providers: [],
+  providers: [
+    NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

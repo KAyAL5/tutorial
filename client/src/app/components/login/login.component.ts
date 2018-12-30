@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material'
+
+import { NotificationService } from '../../services/shared/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,10 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private snackBar: NotificationService) { 
+
+    }
 
   ngOnInit() {
   }
@@ -21,7 +25,7 @@ export class LoginComponent implements OnInit {
     if (this.username == 'admin' && this.password == 'admin') {
       this.router.navigate(["teacher"]);
     } else {
-      alert("Invalid credentials");
+      this.snackBar.notify('Invalid Credentials !!!');
     }
   }
 }
