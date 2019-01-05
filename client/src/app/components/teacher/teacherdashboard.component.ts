@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+
+import { AuthService } from '../../services/shared';
+import { IUser } from 'src/app/interfaces/user';
+
 @Component({
   selector: 'app-teacherdashboard',
   templateUrl: './teacherdashboard.component.html',
@@ -7,7 +11,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TeacherDashboardComponent implements OnInit {
 
-  constructor() { }
+  users: IUser;
+
+  constructor(private authSvc: AuthService) { }
 
   ngOnInit() {
   }

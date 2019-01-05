@@ -1,0 +1,53 @@
+<app-topnavbar></app-topnavbar>
+<mat-card class="example-card">
+   <mat-card-header>
+      <mat-card-title>Registration</mat-card-title>
+   </mat-card-header>
+   <mat-card-content>
+      <form class="example-form">
+         <table class="example-full-width" cellspacing="0">
+            <tr>
+               <td>
+                  <mat-form-field>
+                     <input matInput placeholder="Acadamy Name" required>
+                  </mat-form-field>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <mat-form-field class="example-full-width">
+                     <input matInput placeholder="Email" required >
+                  </mat-form-field>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <mat-form-field class="example-full-width">
+                     <input matInput placeholder="My name" required>
+                  </mat-form-field>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <mat-form-field class="form-element">
+                     <input matInput type="password" placeholder="Password" required>
+                  </mat-form-field>
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <mat-form-field class="example-full-width">
+                     <textarea matInput placeholder="My address" name="address"></textarea>
+                  </mat-form-field>
+               </td>
+            </tr>
+         </table>
+      </form>
+   </mat-card-content>
+   <mat-error *ngIf="invalidForm">
+         Incomplete form
+   </mat-error>
+   <mat-card-actions>
+      <button mat-raised-button (click)="signin()" color="primary">Register</button>
+   </mat-card-actions>
+</mat-card>

@@ -7,5 +7,5 @@ const server = http.createServer(function(req, res){
 });
 
 server.listen(3000, function() {
-    console.log('Acdamy server on port: ' + config.port);
+    console.log('Acdamy server running on port: ' + config.port);
 });

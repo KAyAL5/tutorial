@@ -1,0 +1,18 @@
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-card {
+  width: 300px;
+  margin: 5% auto;
+}
+.mat-card-title{
+  font-size: 16px;
+}
+
+.invalid-feedback {
+  width: 100%;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
+}

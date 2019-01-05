@@ -1,27 +1,32 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material.module';
-import { RoutingModule } from './modules/routing.module';
+import { AppRoutingModule } from './modules/app.routing.module';
 
-import { NotificationService } from './services/shared/notification.service';
+import { AuthService, NotificationService } from './services/shared';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent, RegistrationComponent, TopnavbarComponent } from './components/general';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrationComponent,
+    TopnavbarComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    RoutingModule],
+    AppRoutingModule],
   providers: [
+    AuthService,
     NotificationService],
   bootstrap: [AppComponent]
 })
