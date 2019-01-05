@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { first } from 'rxjs/operators';
 
 import { AuthService } from '../../../services/shared';
 
@@ -15,30 +18,45 @@ import { IUser } from '../../../interfaces';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  
+  loginForm: FormGroup;
+  invalidForm: boolean = false;
   returnUrl: string;
-  user: IUser = {
-    email: '',
-    password: ''
-  };
 
-  constructor(private router: Router,
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
     private route: ActivatedRoute,
     private authSvc: AuthService,
     private snackBar: NotificationService) {
-
   }
 
   ngOnInit() {
-    localStorage.removeItem('currentUser');
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
+
+    // reset login status
+    this.authSvc.logout();
+
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  login(): void {
+  login = () => {
+    this.invalidForm = this.loginForm.invalid;
+    if (this.invalidForm) {
+      return;
+    }
 
-    if (this.user.email !== '' && this.user.password !== '') {
-      this.authSvc.authenticate(this.user).subscribe((result) => {
+    let user: IUser = {
+      "email": this.loginForm.value.email,
+      "password": this.loginForm.value.password
+    };
+
+    if (user.email !== '' && user.password !== '') {
+      this.authSvc.authenticate(user).subscribe((result) => {
         if (result.data && result.data.isexist) {
           localStorage.setItem('currentUser', 'true');
           this.router.navigate(["teacher"]);
@@ -53,5 +71,14 @@ export class LoginComponent implements OnInit {
     else {
       this.snackBar.notify('Please enter email and password');
     }
+  }
+
+  private validEmail() {
+    return this.loginForm.get('email').hasError('required') ? 'Email is required' :
+      this.loginForm.get('email').hasError('email') ? 'Not a valid email' : '';
+  }
+
+  validPassword() {
+    return this.loginForm.get('password').hasError('required') ? 'Password is required' : '';
   }
 }

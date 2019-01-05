@@ -1,4 +1,4 @@
-import { environment } from '../app/services/shared/constants';
+import { environment } from '../services/shared/constants';
 import { HttpHeaders } from '@angular/common/http';
 
 export class AppSettings {
