@@ -1,5 +1,6 @@
-import { environment } from '../services/shared/constants';
 import { HttpHeaders } from '@angular/common/http';
+
+import { environment } from '../services/shared/constants';
 
 export class AppSettings {
     public static _apiUrl: string;

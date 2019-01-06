@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 
 import { IRegistration } from '../../../interfaces';
 
+import { AuthService } from '../../../services/shared';
+import { NotificationService } from '../../../services/shared/notification.service';
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -15,7 +18,10 @@ export class RegistrationComponent implements OnInit {
   invalidForm: boolean = false;
   emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authSvc: AuthService,
+    private snackBar: NotificationService) { }
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -34,7 +40,7 @@ export class RegistrationComponent implements OnInit {
       return;
     }
 
-    let newuser: IRegistration = {
+    let org: IRegistration = {
       acadamy: this.registerForm.value.acadamy,
       email:   this.registerForm.value.email,
       name: this.registerForm.value.name,
@@ -42,8 +48,13 @@ export class RegistrationComponent implements OnInit {
       address: this.registerForm.value.address
     }
     
-    console.log(newuser);
-    alert('form ready to submit');
+    this.authSvc.register(org).subscribe((result) => {
+      if (result.data) {
+        this.snackBar.notify(result.status);
+      }
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   private validAcadamyName() {

@@ -1,7 +1,7 @@
-export interface IRegistration {
+import { IUser } from './user';
+
+export interface IRegistration extends IUser {
     acadamy: string,
-    email: string,
     name: string,
-    password: string,
     address?: string
 }

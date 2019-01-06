@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthService } from '../../../services/shared';
-
 import { NotificationService } from '../../../services/shared/notification.service';
 
 import { IUser } from '../../../interfaces';

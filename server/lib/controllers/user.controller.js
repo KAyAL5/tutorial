@@ -1,6 +1,10 @@
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const userModel = require('../models/user.model');
+const config = require('../../config/app.config');
+
+let decodedToken = '';
 
 // Handle create user actions
 exports.insert = (req, res) => {
@@ -97,7 +101,10 @@ exports.login = (req, res) => {
     promise.then((user) => {
         if (user) {
             if (isValid(req.body.password, user.password)) {
+                // generate token
+                let token = jwt.sign({ email: user.email },config.jwt_secret, { expiresIn: config.jwt_expiration });
                 user.password = null;
+                user.token = token;
                 return res.status(200).json({
                     status: 'success',
                     message: 'valid user',
@@ -123,4 +130,17 @@ function hashPassword(password) {
 
 function isValid(hashedpassword, password) {
     return bcrypt.compareSync(hashedpassword, password);
+}
+
+function verifyToken(req, res) {
+    let token = req.query.token;
+    jwt.verify(token, config.jwt_secret, (err, tokendata) => {
+        if (err) {
+            return res.status(400).json({ message: ' Unauthorized request' });
+        }
+        if (tokendata) {
+            decodedToken = tokendata;
+            //next();
+        }
+    })
 }
