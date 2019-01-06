@@ -8,8 +8,6 @@ import { AuthService } from '../../../services/shared';
 
 import { NotificationService } from '../../../services/shared/notification.service';
 
-import { UserType } from '../../../services/shared/constants';
-
 import { IUser } from '../../../interfaces';
 
 @Component({
@@ -55,22 +53,16 @@ export class LoginComponent implements OnInit {
       "password": this.loginForm.value.password
     };
 
-    if (user.email !== '' && user.password !== '') {
-      this.authSvc.authenticate(user).subscribe((result) => {
-        if (result.data && result.data.isexist) {
-          localStorage.setItem('currentUser', 'true');
-          this.router.navigate(["teacher"]);
-        }
-        else {
-          this.snackBar.notify('Invalid user');
-        }
-      }, (err) => {
-        console.log(err);
-      });
-    }
-    else {
-      this.snackBar.notify('Please enter email and password');
-    }
+    this.authSvc.authenticate(user).subscribe((result) => {
+      if (result.data && result.data._id) {
+        this.router.navigate(["teacher"]);
+      }
+      else {
+        this.snackBar.notify(result.message);
+      }
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   private validEmail() {

@@ -104,7 +104,7 @@ exports.login = (req, res) => {
                     data: user
                 });
             } else {
-                return res.status(400).json({ message: 'Invalid Credentials' });
+                return res.status(200).json({ message: 'Invalid Credentials' });
             }
         }
         else {
